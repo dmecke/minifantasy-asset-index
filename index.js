@@ -67,21 +67,23 @@ const listingComponent = {
     computed: {
         filteredAssets() {
             return this.assets.filter(asset => {
-                const query = this.q.toLowerCase();
+                const query = this.q.toLowerCase().split(' ');
 
-                if (asset.name.toLowerCase().includes(query)) {
-                    return true;
-                }
+                return query.length === query.filter(q => {
+                    if (asset.name.toLowerCase().includes(q)) {
+                        return true;
+                    }
 
-                if (asset.pack.toLowerCase().includes(query)) {
-                    return true;
-                }
+                    if (asset.pack.toLowerCase().includes(q)) {
+                        return true;
+                    }
 
-                if (asset.tags.filter(tag => tag.toLowerCase().includes(query)).length > 0) {
-                    return true;
-                }
+                    if (asset.tags.filter(tag => tag.toLowerCase().includes(q)).length > 0) {
+                        return true;
+                    }
 
-                return false;
+                    return false;
+                }).length;
             });
         }
     },
