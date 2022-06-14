@@ -56,6 +56,9 @@ const listingComponent = {
             }
             this.sorting = column;
         },
+        open(link) {
+            window.open(link, '_blank');
+        },
     },
     created() {
         const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRtDDaI5kVRkOUWqJb8GRksylMr-wsKKbKB6O4XQ1rhVs5weqq_7NZPltfsniDND5C17kFatv2mUtyp/pub?gid=0&single=true&output=tsv';
@@ -114,8 +117,12 @@ const listingComponent = {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="asset in filteredAssets">
-                        <td :title="asset.tags.join(', ')"><a :href="asset.link" target="_blank">{{ asset.name }}</a></td>
+                    <tr
+                        v-for="asset in filteredAssets"
+                        :title="asset.tags.join(', ')"
+                        @click="open(asset.link)"
+                    >
+                        <td>{{ asset.name }}</a></td>
                         <td>{{ asset.type }}</td>
                         <td>{{ asset.pack }}</td>
                         <td>{{ asset.packType }}</td>
@@ -161,9 +168,20 @@ const createStyle = () => {
         #asset-index-container table tr {
             text-align: left;
             height: 25px;
+            cursor: pointer;
+        }
+        #asset-index-container table tbody tr:nth-child(odd) {
+            background-color: #f6f4f020;
+        }
+        #asset-index-container table tr:hover {
+            background-color: #ff4f4f !important;
+        }
+        #asset-index-container table tr td {
+            padding: 4px;
         }
         #asset-index-container table tr th {
             cursor: pointer;
+            padding: 4px;
         }
     `;
 
