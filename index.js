@@ -97,17 +97,15 @@ const listingComponent = {
                         <th>Pack</th>
                         <th>Pack Type</th>
                         <th>Price</th>
-                        <th>Tags</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="asset in filteredAssets">
-                        <td><a :href="asset.link" target="_blank">{{ asset.name }}</a></td>
+                        <td :title="asset.tags.join(', ')"><a :href="asset.link" target="_blank">{{ asset.name }}</a></td>
                         <td>{{ asset.type }}</td>
                         <td>{{ asset.pack }}</td>
                         <td>{{ asset.packType }}</td>
                         <td>{{ asset.price }}</td>
-                        <td>{{ asset.tags.join(', ') }}</td>
                     </tr>
                 </tbody>
             </table>
