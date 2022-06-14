@@ -154,7 +154,6 @@ const createStyle = () => {
         }
         #asset-index-container a {
             color: #f6f4f0;
-            text-decoration: underline;
         }
         #asset-index-container table {
             width: 100%
