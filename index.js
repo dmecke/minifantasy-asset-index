@@ -45,7 +45,17 @@ const listingComponent = {
     data() {
         return {
             assets: [],
+            sorting: 'name',
+            sortingOrder: 'asc',
         }
+    },
+    methods: {
+        sort(column) {
+            if (this.sorting === column) {
+                this.sortingOrder = this.sortingOrder === 'asc' ? 'desc' : 'asc';
+            }
+            this.sorting = column;
+        },
     },
     created() {
         const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRtDDaI5kVRkOUWqJb8GRksylMr-wsKKbKB6O4XQ1rhVs5weqq_7NZPltfsniDND5C17kFatv2mUtyp/pub?gid=0&single=true&output=tsv';
@@ -66,25 +76,29 @@ const listingComponent = {
     },
     computed: {
         filteredAssets() {
-            return this.assets.filter(asset => {
-                const query = this.q.toLowerCase().split(' ');
+            return this
+                .assets
+                .filter(asset => {
+                    const query = this.q.toLowerCase().split(' ');
 
-                return query.length === query.filter(q => {
-                    if (asset.name.toLowerCase().includes(q)) {
-                        return true;
-                    }
+                    return query.length === query.filter(q => {
+                        if (asset.name.toLowerCase().includes(q)) {
+                            return true;
+                        }
 
-                    if (asset.pack.toLowerCase().includes(q)) {
-                        return true;
-                    }
+                        if (asset.pack.toLowerCase().includes(q)) {
+                            return true;
+                        }
 
-                    if (asset.tags.filter(tag => tag.toLowerCase().includes(q)).length > 0) {
-                        return true;
-                    }
+                        if (asset.tags.filter(tag => tag.toLowerCase().includes(q)).length > 0) {
+                            return true;
+                        }
 
-                    return false;
-                }).length;
-            });
+                        return false;
+                    }).length;
+                })
+                .sort((a, b) => a[this.sorting].toLowerCase().localeCompare(b[this.sorting].toLowerCase()) * (this.sortingOrder === 'asc' ? 1 : -1))
+            ;
         }
     },
     template: `
@@ -92,11 +106,11 @@ const listingComponent = {
             <table v-if="assets.length > 0">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Pack</th>
-                        <th>Pack Type</th>
-                        <th>Price</th>
+                        <th @click="sort('name')" :style="{ fontStyle: sorting === 'name' ? 'italic' : 'normal' }">Name</th>
+                        <th @click="sort('type')" :style="{ fontStyle: sorting === 'type' ? 'italic' : 'normal' }">Type</th>
+                        <th @click="sort('pack')" :style="{ fontStyle: sorting === 'pack' ? 'italic' : 'normal' }">Pack</th>
+                        <th @click="sort('packType')" :style="{ fontStyle: sorting === 'packType' ? 'italic' : 'normal' }">Pack Type</th>
+                        <th @click="sort('price')" :style="{ fontStyle: sorting === 'price' ? 'italic' : 'normal' }">Price</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,6 +162,9 @@ const createStyle = () => {
         #asset-index-container table tr {
             text-align: left;
             height: 25px;
+        }
+        #asset-index-container table tr th {
+            cursor: pointer;
         }
     `;
 
