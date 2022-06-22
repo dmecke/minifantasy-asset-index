@@ -93,6 +93,10 @@ const listingComponent = {
                             return true;
                         }
 
+                        if (asset.type.toLowerCase().includes(q)) {
+                            return true;
+                        }
+
                         if (asset.tags.filter(tag => tag.toLowerCase().includes(q)).length > 0) {
                             return true;
                         }
