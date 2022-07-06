@@ -217,20 +217,9 @@ const createContainer = () => {
 
 class WixDefaultCustomElement extends HTMLElement {
     connectedCallback() {
-        if (!this.isEnabled()) {
-            return;
-        }
-
         this.appendChild(createStyle());
         this.appendChild(createContainer());
         this.appendChild(createVue());
-    }
-
-    isEnabled() {
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        const proxy = new Proxy(urlSearchParams, { get: (searchParams, prop) => searchParams.get(prop)});
-
-        return proxy.preview;
     }
 }
 
