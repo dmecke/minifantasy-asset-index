@@ -64,11 +64,22 @@ const listingComponent = {
         const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRtDDaI5kVRkOUWqJb8GRksylMr-wsKKbKB6O4XQ1rhVs5weqq_7NZPltfsniDND5C17kFatv2mUtyp/pub?gid=0&single=true&output=tsv';
         makeRequest(url, data => {
             data = data.split('\r\n').slice(1).map(data => data.split('\t')).map(data => {
+                const store = [];
+                if (data[4] === 'yes') {
+                    store.push('itch');
+                }
+                if (data[5] === 'yes') {
+                    store.push('unity');
+                }
+                if (data[6] === 'yes') {
+                    store.push('patreon');
+                }
+
                 return {
                     name: data[0],
                     type: data[1],
                     pack: data[2],
-                    packType: data[3],
+                    store: store.join('_') + '.png',
                     link: data[7],
                     tags: data[8].split(',').map(tag => tag.trim()),
                 }
@@ -115,7 +126,7 @@ const listingComponent = {
                         <th @click="sort('name')" :style="{ fontStyle: sorting === 'name' ? 'italic' : 'normal' }">Name</th>
                         <th @click="sort('type')" :style="{ fontStyle: sorting === 'type' ? 'italic' : 'normal' }">Type</th>
                         <th @click="sort('pack')" :style="{ fontStyle: sorting === 'pack' ? 'italic' : 'normal' }">Pack</th>
-                        <th @click="sort('packType')" :style="{ fontStyle: sorting === 'packType' ? 'italic' : 'normal' }">Pack Type</th>
+                        <th @click="sort('store')" :style="{ fontStyle: sorting === 'store' ? 'italic' : 'normal' }">Store</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -127,7 +138,7 @@ const listingComponent = {
                         <td>{{ asset.name }}</a></td>
                         <td>{{ asset.type }}</td>
                         <td>{{ asset.pack }}</td>
-                        <td>{{ asset.packType }}</td>
+                        <td><img :src="asset.store" /></td>
                     </tr>
                 </tbody>
             </table>
