@@ -190,10 +190,14 @@ const createStyle = () => {
         }
         #asset-index-container table tr td {
             padding: 4px;
+            vertical-align: middle;
         }
         #asset-index-container table tr th {
             cursor: pointer;
             padding: 4px;
+        }
+        #asset-index-container table tr td img {
+            display: block;
         }
     `;
 
