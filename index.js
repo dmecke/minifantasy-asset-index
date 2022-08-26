@@ -69,7 +69,6 @@ const listingComponent = {
                     type: data[1],
                     pack: data[2],
                     packType: data[3],
-                    price: data[4],
                     link: data[5],
                     tags: data[6].split(',').map(tag => tag.trim()),
                 }
@@ -97,10 +96,6 @@ const listingComponent = {
                             return true;
                         }
 
-                        if (asset.price.toLowerCase().includes(q)) {
-                            return true;
-                        }
-
                         if (asset.tags.filter(tag => tag.toLowerCase().includes(q)).length > 0) {
                             return true;
                         }
@@ -121,7 +116,6 @@ const listingComponent = {
                         <th @click="sort('type')" :style="{ fontStyle: sorting === 'type' ? 'italic' : 'normal' }">Type</th>
                         <th @click="sort('pack')" :style="{ fontStyle: sorting === 'pack' ? 'italic' : 'normal' }">Pack</th>
                         <th @click="sort('packType')" :style="{ fontStyle: sorting === 'packType' ? 'italic' : 'normal' }">Pack Type</th>
-                        <th @click="sort('price')" :style="{ fontStyle: sorting === 'price' ? 'italic' : 'normal' }">Price</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,7 +128,6 @@ const listingComponent = {
                         <td>{{ asset.type }}</td>
                         <td>{{ asset.pack }}</td>
                         <td>{{ asset.packType }}</td>
-                        <td>{{ asset.price }}</td>
                     </tr>
                 </tbody>
             </table>
