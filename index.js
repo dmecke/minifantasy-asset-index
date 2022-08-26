@@ -69,8 +69,8 @@ const listingComponent = {
                     type: data[1],
                     pack: data[2],
                     packType: data[3],
-                    link: data[5],
-                    tags: data[6].split(',').map(tag => tag.trim()),
+                    link: data[7],
+                    tags: data[8].split(',').map(tag => tag.trim()),
                 }
             });
             this.assets = data;
