@@ -138,7 +138,7 @@ const listingComponent = {
                         <td>{{ asset.name }}</a></td>
                         <td>{{ asset.type }}</td>
                         <td>{{ asset.pack }}</td>
-                        <td><img :src="asset.store" /></td>
+                        <td><img :src="'https://dmecke.github.io/minifantasy-asset-index/' + asset.store" /></td>
                     </tr>
                 </tbody>
             </table>
