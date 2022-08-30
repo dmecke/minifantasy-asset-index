@@ -65,23 +65,23 @@ const listingComponent = {
         makeRequest(url, data => {
             data = data.split('\r\n').slice(1).map(data => data.split('\t')).map(data => {
                 const store = [];
-                if (data[3] === 'yes') {
+                if (data[4] === 'yes') {
                     store.push('itch');
                 }
-                if (data[4] === 'yes') {
+                if (data[5] === 'yes') {
                     store.push('unity');
                 }
-                if (data[5] === 'yes') {
+                if (data[6] === 'yes') {
                     store.push('patreon');
                 }
 
                 return {
                     name: data[0],
                     type: data[1],
-                    pack: data[2],
+                    pack: data[6] === 'yes' ? 'Patreon Exclusive' : data[2],
                     store: store.join('_') + '.png',
-                    link: data[6],
-                    tags: data[7].split(',').map(tag => tag.trim()),
+                    link: data[7],
+                    tags: data[8].split(',').map(tag => tag.trim()),
                 }
             });
             this.assets = data;
